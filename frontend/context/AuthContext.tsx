@@ -82,12 +82,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const syncKey = "auth:synced";
         if (!sessionStorage.getItem(syncKey)) {
           sessionStorage.setItem(syncKey, "1");
-<<<<<<< HEAD
-          const API_BASE_URL =
-=======
-          const baseUrl =
->>>>>>> fc2ffb0 (backend+database done)
-            process.env.NEXT_PUBLIC_API_BASE_URL!;
+          const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
           fetch(`${baseUrl}/auth/sync`, {
             method: "POST",
             headers: {
