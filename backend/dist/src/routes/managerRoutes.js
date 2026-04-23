@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const managerController_1 = require("../controllers/managerController");
+const authMiddleware_1 = require("../middleware/authMiddleware");
+const router = (0, express_1.Router)();
+router.get("/:cognitoId", authMiddleware_1.authenticate, managerController_1.getManagerProfile);
+router.put("/:cognitoId", authMiddleware_1.authenticate, managerController_1.updateManagerProfile);
+router.get("/:cognitoId/properties", authMiddleware_1.authenticate, managerController_1.getManagerProperties);
+exports.default = router;

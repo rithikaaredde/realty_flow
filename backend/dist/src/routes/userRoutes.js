@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const favoritesController_1 = require("../controllers/favoritesController");
+const authMiddleware_1 = require("../middleware/authMiddleware");
+const router = (0, express_1.Router)();
+router.get("/:cognitoId/favorites", authMiddleware_1.authenticate, favoritesController_1.getFavorites);
+router.post("/:cognitoId/favorites/:propertyId", authMiddleware_1.authenticate, favoritesController_1.addFavorite);
+router.delete("/:cognitoId/favorites/:propertyId", authMiddleware_1.authenticate, favoritesController_1.removeFavorite);
+router.post("/:cognitoId/favorites/:propertyId/toggle", authMiddleware_1.authenticate, favoritesController_1.toggleFavorite);
+exports.default = router;

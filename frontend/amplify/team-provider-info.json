@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-realtyflow-dev-a1d3d-authRole",
+      "UnauthRoleArn": "arn:aws:iam::316704942906:role/amplify-realtyflow-dev-a1d3d-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::316704942906:role/amplify-realtyflow-dev-a1d3d-authRole",
+      "Region": "ap-south-1",
+      "DeploymentBucketName": "amplify-realtyflow-dev-a1d3d-deployment",
+      "UnauthRoleName": "amplify-realtyflow-dev-a1d3d-unauthRole",
+      "StackName": "amplify-realtyflow-dev-a1d3d",
+      "StackId": "arn:aws:cloudformation:ap-south-1:316704942906:stack/amplify-realtyflow-dev-a1d3d/2cceeb70-3d8c-11f1-9ad6-022b3cc28acd",
+      "AmplifyAppId": "d2y8ovnayz5c4q"
+    },
+    "categories": {
+      "auth": {
+        "realtyflow37c07c43": {}
+      }
+    }
+  }
+}
