@@ -18,30 +18,36 @@ import { errorHandler } from "./middleware/errorHandler";
 
 dotenv.config();
 
-// ✅ CREATE APP FIRST
 const app = express();
-const port = Number(process.env.PORT || 3001);
+const port = Number(process.env.PORT || 3000);
 
 // ✅ MIDDLEWARE
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
-// ✅ AUTH (AFTER app is created)
-app.use(authenticate);
+// ✅ PUBLIC ROUTES (important for Railway + browser)
+app.get("/", (_req, res) => {
+  res.send("API is running 🚀");
+});
 
-// ✅ ROUTES
 app.get("/health", (_req, res) => res.json({ ok: true }));
 
+// ✅ AUTH ROUTES (no auth required)
 app.use("/auth", authRoutes);
-app.use("/properties", propertyRoutes);
-app.use("/applications", applicationRoutes);
-app.use("/leases", leaseRoutes);
-app.use("/payments", paymentRoutes);
-app.use("/tenants", tenantRoutes);
-app.use("/managers", managerRoutes);
-app.use("/users", userRoutes);
-app.use("/favorites", favoritesRoutes);
+
+// ✅ PROTECTED ROUTES (apply auth here only)
+app.use("/properties", authenticate, propertyRoutes);
+app.use("/applications", authenticate, applicationRoutes);
+app.use("/leases", authenticate, leaseRoutes);
+app.use("/payments", authenticate, paymentRoutes);
+app.use("/tenants", authenticate, tenantRoutes);
+app.use("/managers", authenticate, managerRoutes);
+app.use("/users", authenticate, userRoutes);
+app.use("/favorites", authenticate, favoritesRoutes);
+
+// ❌ REMOVED THIS (this was breaking everything)
+// app.use(authenticate);
 
 // ✅ ERROR HANDLER
 app.use(errorHandler);
