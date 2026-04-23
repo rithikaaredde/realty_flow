@@ -53,6 +53,6 @@ app.use("/favorites", authenticate, favoritesRoutes);
 app.use(errorHandler);
 
 // ✅ START SERVER
-app.listen(port, () => {
-  console.log(`server running on http://localhost:${port}`);
+app.listen(port, "0.0.0.0", () => {
+  console.log(`server running on port ${port}`);
 });
