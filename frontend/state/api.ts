@@ -9,7 +9,7 @@ import "@/src/lib/amplifyConfig";
 import { getAuthToken } from "@/src/lib/auth";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3001";
+  process.env.NEXT_PUBLIC_API_BASE_URL ?? "https://realty-flow.onrender.com";
 
 const readStoredUser = () => {
   try {
