@@ -13,8 +13,8 @@ export const authenticate = (
   _res: Response,
   next: NextFunction
 ) => {
-  const userId = req.headers["x-user-id"] as string;
-  const rawRole = String(req.headers["x-user-role"] ?? "").toUpperCase();
+  const userId = req.header("x-user-id") as string;
+  const rawRole = (req.header("x-user-role") || "").toUpperCase();
   const role: "TENANT" | "MANAGER" | undefined =
     rawRole === "MANAGER" || rawRole === "ADMIN" || rawRole === "OWNER"
       ? "MANAGER"

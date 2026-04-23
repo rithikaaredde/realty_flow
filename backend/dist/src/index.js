@@ -19,29 +19,33 @@ const favoritesRoutes_1 = __importDefault(require("./routes/favoritesRoutes"));
 const authMiddleware_1 = require("./middleware/authMiddleware");
 const errorHandler_1 = require("./middleware/errorHandler");
 dotenv_1.default.config();
-// ✅ CREATE APP FIRST
 const app = (0, express_1.default)();
-const port = Number(process.env.PORT || 3001);
+const port = Number(process.env.PORT || 3000);
 // ✅ MIDDLEWARE
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use((0, morgan_1.default)("dev"));
-// ✅ AUTH (AFTER app is created)
-app.use(authMiddleware_1.authenticate);
-// ✅ ROUTES
+// ✅ PUBLIC ROUTES (important for Railway + browser)
+app.get("/", (_req, res) => {
+    res.send("API is running 🚀");
+});
 app.get("/health", (_req, res) => res.json({ ok: true }));
+// ✅ AUTH ROUTES (no auth required)
 app.use("/auth", authRoutes_1.default);
-app.use("/properties", propertyRoutes_1.default);
-app.use("/applications", applicationRoutes_1.default);
-app.use("/leases", leaseRoutes_1.default);
-app.use("/payments", paymentRoutes_1.default);
-app.use("/tenants", tenantRoutes_1.default);
-app.use("/managers", managerRoutes_1.default);
-app.use("/users", userRoutes_1.default);
-app.use("/favorites", favoritesRoutes_1.default);
+// ✅ PROTECTED ROUTES (apply auth here only)
+app.use("/properties", authMiddleware_1.authenticate, propertyRoutes_1.default);
+app.use("/applications", authMiddleware_1.authenticate, applicationRoutes_1.default);
+app.use("/leases", authMiddleware_1.authenticate, leaseRoutes_1.default);
+app.use("/payments", authMiddleware_1.authenticate, paymentRoutes_1.default);
+app.use("/tenants", authMiddleware_1.authenticate, tenantRoutes_1.default);
+app.use("/managers", authMiddleware_1.authenticate, managerRoutes_1.default);
+app.use("/users", authMiddleware_1.authenticate, userRoutes_1.default);
+app.use("/favorites", authMiddleware_1.authenticate, favoritesRoutes_1.default);
+// ❌ REMOVED THIS (this was breaking everything)
+// app.use(authenticate);
 // ✅ ERROR HANDLER
 app.use(errorHandler_1.errorHandler);
 // ✅ START SERVER
-app.listen(port, () => {
-    console.log(`server running on http://localhost:${port}`);
+app.listen(port, "0.0.0.0", () => {
+    console.log(`server running on port ${port}`);
 });
