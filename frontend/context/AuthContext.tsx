@@ -82,8 +82,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const syncKey = "auth:synced";
         if (!sessionStorage.getItem(syncKey)) {
           sessionStorage.setItem(syncKey, "1");
-          const baseUrl =
-            process.env.NEXT_PUBLIC_API_BASE_URL ?? "https://realty-flow.onrender.com";
+          const API_BASE_URL =
+            process.env.NEXT_PUBLIC_API_BASE_URL!;
           fetch(`${baseUrl}/auth/sync`, {
             method: "POST",
             headers: {
